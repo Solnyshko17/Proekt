@@ -4,24 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13c36719be0142e4b858d7f08b34e943" Name="Diagram1">
-        <EntityTypeShape EntityType="KrossModel.CableType" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Equipment" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Kross" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Linear" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Place" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Role" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Station" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.User" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KrossModel.Visit" Width="1.5" PointX="10.25" PointY="1.125" IsExpanded="true" />
-        <AssociationConnector Association="KrossModel.FK_Kross_CableType" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_Kross_Equipment" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_Kross_Linear" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_Kross_Place" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_Kross_Station" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_User_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="KrossModel.FK_Visit_User" ManuallyRouted="false" />
+      <Diagram DiagramId="04b277b6bed146dba36913e857746e66" Name="Diagram1">
+        <EntityTypeShape EntityType="BdModel.Visit" Width="1.5" PointX="10.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdModel.CableType" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="BdModel.Equipment" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="BdModel.Kross" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="BdModel.Linear" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="BdModel.Place" Width="1.5" PointX="0.75" PointY="14.375" />
+        <EntityTypeShape EntityType="BdModel.Role" Width="1.5" PointX="6.125" PointY="1.25" />
+        <EntityTypeShape EntityType="BdModel.Station" Width="1.5" PointX="0.75" PointY="17.375" />
+        <EntityTypeShape EntityType="BdModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BdModel.User" Width="1.5" PointX="8.375" PointY="0.875" />
+        <AssociationConnector Association="BdModel.FK_Kross_CableType" />
+        <AssociationConnector Association="BdModel.FK_Kross_Equipment" />
+        <AssociationConnector Association="BdModel.FK_Kross_Linear" />
+        <AssociationConnector Association="BdModel.FK_Kross_Place" />
+        <AssociationConnector Association="BdModel.FK_Kross_Station" />
+        <AssociationConnector Association="BdModel.FK_User_Role" />
+        <AssociationConnector Association="BdModel.FK_Visit_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

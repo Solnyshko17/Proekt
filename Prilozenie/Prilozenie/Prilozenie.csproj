@@ -106,6 +106,12 @@
     <Compile Include="DB\Role.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB\sp_helpdiagrams_Result.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\Station.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
@@ -135,6 +141,7 @@
     <Compile Include="UI\SeePage.xaml.cs">
       <DependentUpon>SeePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\KrossVM.cs" />
     <Page Include="Authorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

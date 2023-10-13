@@ -28,11 +28,11 @@
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,12,0,0">
             <TextBlock Text="Введите логин:"/>
-            <TextBox x:Name="tbLogin"/>
+            <TextBox x:Name="tbLogin" Text="p.pavlov"/>
             <TextBlock Text="Введите пароль:" />
             <Grid>
-                <TextBox x:Name="tbPassword"/>
-                <PasswordBox x:Name="pbPassword"/>
+                <TextBox x:Name="tbPassword" Text="123456789"/>
+                <PasswordBox x:Name="pbPassword" Password="123456789"/>
                 <CheckBox x:Name="cbPassword" Click="cbPassword_Click" HorizontalAlignment="Right" Margin="0 10 -18 0"/>
             </Grid>
             <Button x:Name="btnGo" Content="Авторизация" Background="#FF1F78B4" Margin="5" Click="btnGo_Click"/>

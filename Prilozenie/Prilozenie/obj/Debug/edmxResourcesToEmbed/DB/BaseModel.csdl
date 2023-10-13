@@ -1,5 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="KrossModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="BdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Visit">
+    <Key>
+      <PropertyRef Name="Id_Visit" />
+    </Key>
+    <Property Name="Id_Visit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateToVisit" Type="DateTime" Precision="3" />
+    <Property Name="Id_User" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="BdModel.FK_Visit_User" FromRole="Visit" ToRole="User" />
+  </EntityType>
+  <EntityContainer Name="KrossEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Visit" EntityType="Self.Visit" />
+    <EntitySet Name="CableType" EntityType="BdModel.CableType" />
+    <EntitySet Name="Equipment" EntityType="BdModel.Equipment" />
+    <EntitySet Name="Kross" EntityType="BdModel.Kross" />
+    <EntitySet Name="Linear" EntityType="BdModel.Linear" />
+    <EntitySet Name="Place" EntityType="BdModel.Place" />
+    <EntitySet Name="Role" EntityType="BdModel.Role" />
+    <EntitySet Name="Station" EntityType="BdModel.Station" />
+    <EntitySet Name="sysdiagrams" EntityType="BdModel.sysdiagrams" />
+    <EntitySet Name="User" EntityType="BdModel.User" />
+    <AssociationSet Name="FK_Kross_CableType" Association="BdModel.FK_Kross_CableType">
+      <End Role="CableType" EntitySet="CableType" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Equipment" Association="BdModel.FK_Kross_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Linear" Association="BdModel.FK_Kross_Linear">
+      <End Role="Linear" EntitySet="Linear" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Place" Association="BdModel.FK_Kross_Place">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Station" Association="BdModel.FK_Kross_Station">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="BdModel.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visit_User" Association="BdModel.FK_Visit_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Visit" EntitySet="Visit" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BdModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BdModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
   <EntityType Name="CableType">
     <Key>
       <PropertyRef Name="Id_CableType" />
@@ -7,35 +86,35 @@
     <Property Name="Id_CableType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name_C" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_CableType" FromRole="CableType" ToRole="Kross" />
+    <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_CableType" FromRole="CableType" ToRole="Kross" />
   </EntityType>
   <EntityType Name="Equipment">
     <Key>
       <PropertyRef Name="Id_Equipment" />
     </Key>
     <Property Name="Id_Equipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Fee" Type="Int32" Nullable="false" />
     <Property Name="Port" Type="Int32" Nullable="false" />
-    <Property Name="Subscriber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-    <Property Name="TypeOfPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Equipment" FromRole="Equipment" ToRole="Kross" />
+    <Property Name="Subscriber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="TypeOfPhone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Equipment" FromRole="Equipment" ToRole="Kross" />
   </EntityType>
   <EntityType Name="Kross">
     <Key>
       <PropertyRef Name="Id_Kross" />
     </Key>
-    <Property Name="Id_Kross" Type="Int32" Nullable="false" />
+    <Property Name="Id_Kross" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Id_Equipment" Type="Int32" />
     <Property Name="Id_Station" Type="Int32" />
     <Property Name="Id_Linear" Type="Int32" />
     <Property Name="Id_CableType" Type="Int32" />
     <Property Name="Id_Place" Type="Int32" />
-    <NavigationProperty Name="CableType" Relationship="Self.FK_Kross_CableType" FromRole="Kross" ToRole="CableType" />
-    <NavigationProperty Name="Equipment" Relationship="Self.FK_Kross_Equipment" FromRole="Kross" ToRole="Equipment" />
-    <NavigationProperty Name="Linear" Relationship="Self.FK_Kross_Linear" FromRole="Kross" ToRole="Linear" />
-    <NavigationProperty Name="Place" Relationship="Self.FK_Kross_Place" FromRole="Kross" ToRole="Place" />
-    <NavigationProperty Name="Station" Relationship="Self.FK_Kross_Station" FromRole="Kross" ToRole="Station" />
+    <NavigationProperty Name="CableType" Relationship="BdModel.FK_Kross_CableType" FromRole="Kross" ToRole="CableType" />
+    <NavigationProperty Name="Equipment" Relationship="BdModel.FK_Kross_Equipment" FromRole="Kross" ToRole="Equipment" />
+    <NavigationProperty Name="Linear" Relationship="BdModel.FK_Kross_Linear" FromRole="Kross" ToRole="Linear" />
+    <NavigationProperty Name="Place" Relationship="BdModel.FK_Kross_Place" FromRole="Kross" ToRole="Place" />
+    <NavigationProperty Name="Station" Relationship="BdModel.FK_Kross_Station" FromRole="Kross" ToRole="Station" />
   </EntityType>
   <EntityType Name="Linear">
     <Key>
@@ -44,7 +123,7 @@
     <Property Name="Id_Linear" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Plint_L" Type="Int32" />
     <Property Name="Pair_L" Type="Int32" />
-    <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Linear" FromRole="Linear" ToRole="Kross" />
+    <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Linear" FromRole="Linear" ToRole="Kross" />
   </EntityType>
   <EntityType Name="Place">
     <Key>
@@ -56,15 +135,15 @@
     <Property Name="Pair" Type="Int32" />
     <Property Name="Mesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Note" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Place" FromRole="Place" ToRole="Kross" />
+    <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Place" FromRole="Place" ToRole="Kross" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
       <PropertyRef Name="Id_Role" />
     </Key>
     <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="BdModel.FK_User_Role" FromRole="Role" ToRole="User" />
   </EntityType>
   <EntityType Name="Station">
     <Key>
@@ -73,13 +152,13 @@
     <Property Name="Id_Station" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Plint_St" Type="Int32" Nullable="false" />
     <Property Name="Pair_St" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Station" FromRole="Station" ToRole="Kross" />
+    <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Station" FromRole="Station" ToRole="Kross" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="principal_id" Type="Int32" Nullable="false" />
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
@@ -90,24 +169,15 @@
       <PropertyRef Name="Id_User" />
     </Key>
     <Property Name="Id_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Id_Role" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
-    <NavigationProperty Name="Visit" Relationship="Self.FK_Visit_User" FromRole="User" ToRole="Visit" />
-  </EntityType>
-  <EntityType Name="Visit">
-    <Key>
-      <PropertyRef Name="Id_Visit" />
-    </Key>
-    <Property Name="Id_Visit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DateToVisit" Type="DateTime" Precision="3" />
-    <Property Name="Id_User" Type="Int32" />
-    <NavigationProperty Name="User" Relationship="Self.FK_Visit_User" FromRole="Visit" ToRole="User" />
+    <NavigationProperty Name="Role" Relationship="BdModel.FK_User_Role" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="Visit" Relationship="BdModel.FK_Visit_User" FromRole="User" ToRole="Visit" />
   </EntityType>
   <Association Name="FK_Kross_CableType">
-    <End Role="CableType" Type="Self.CableType" Multiplicity="0..1" />
-    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <End Type="BdModel.CableType" Role="CableType" Multiplicity="0..1" />
+    <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CableType">
         <PropertyRef Name="Id_CableType" />
@@ -118,8 +188,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Kross_Equipment">
-    <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
-    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <End Type="BdModel.Equipment" Role="Equipment" Multiplicity="0..1" />
+    <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Equipment">
         <PropertyRef Name="Id_Equipment" />
@@ -130,8 +200,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Kross_Linear">
-    <End Role="Linear" Type="Self.Linear" Multiplicity="0..1" />
-    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <End Type="BdModel.Linear" Role="Linear" Multiplicity="0..1" />
+    <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Linear">
         <PropertyRef Name="Id_Linear" />
@@ -142,8 +212,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Kross_Place">
-    <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
-    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <End Type="BdModel.Place" Role="Place" Multiplicity="0..1" />
+    <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Place">
         <PropertyRef Name="Id_Place" />
@@ -154,8 +224,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Kross_Station">
-    <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
-    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <End Type="BdModel.Station" Role="Station" Multiplicity="0..1" />
+    <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Station">
         <PropertyRef Name="Id_Station" />
@@ -166,8 +236,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_User_Role">
-    <End Role="Role" Type="Self.Role" Multiplicity="1" />
-    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <End Type="BdModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="BdModel.User" Role="User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Role">
         <PropertyRef Name="Id_Role" />
@@ -178,8 +248,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Visit_User">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
-    <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+    <End Type="BdModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="BdModel.Visit" Role="Visit" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="Id_User" />
@@ -189,44 +259,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="KrossEntities2" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="CableType" EntityType="Self.CableType" />
-    <EntitySet Name="Equipment" EntityType="Self.Equipment" />
-    <EntitySet Name="Kross" EntityType="Self.Kross" />
-    <EntitySet Name="Linear" EntityType="Self.Linear" />
-    <EntitySet Name="Place" EntityType="Self.Place" />
-    <EntitySet Name="Role" EntityType="Self.Role" />
-    <EntitySet Name="Station" EntityType="Self.Station" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <EntitySet Name="User" EntityType="Self.User" />
-    <EntitySet Name="Visit" EntityType="Self.Visit" />
-    <AssociationSet Name="FK_Kross_CableType" Association="Self.FK_Kross_CableType">
-      <End Role="CableType" EntitySet="CableType" />
-      <End Role="Kross" EntitySet="Kross" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kross_Equipment" Association="Self.FK_Kross_Equipment">
-      <End Role="Equipment" EntitySet="Equipment" />
-      <End Role="Kross" EntitySet="Kross" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kross_Linear" Association="Self.FK_Kross_Linear">
-      <End Role="Linear" EntitySet="Linear" />
-      <End Role="Kross" EntitySet="Kross" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kross_Place" Association="Self.FK_Kross_Place">
-      <End Role="Place" EntitySet="Place" />
-      <End Role="Kross" EntitySet="Kross" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Kross_Station" Association="Self.FK_Kross_Station">
-      <End Role="Station" EntitySet="Station" />
-      <End Role="Kross" EntitySet="Kross" />
-    </AssociationSet>
-    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-      <End Role="Role" EntitySet="Role" />
-      <End Role="User" EntitySet="User" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Visit_User" Association="Self.FK_Visit_User">
-      <End Role="User" EntitySet="User" />
-      <End Role="Visit" EntitySet="Visit" />
-    </AssociationSet>
-  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
 </Schema>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище KrossModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище BdModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CableType">
           <Key>
             <PropertyRef Name="Id_CableType" />
@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="Id_Kross" />
           </Key>
-          <Property Name="Id_Kross" Type="int" Nullable="false" />
+          <Property Name="Id_Kross" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Id_Equipment" Type="int" />
           <Property Name="Id_Station" Type="int" />
           <Property Name="Id_Linear" Type="int" />
@@ -180,7 +180,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище KrossModelContainer">
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище BdModelContainer">
           <EntitySet Name="CableType" EntityType="Self.CableType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kross" EntityType="Self.Kross" Schema="dbo" store:Type="Tables" />
@@ -220,11 +251,89 @@
             <End Role="Visit" EntitySet="Visit" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="KrossModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id_Visit" />
+          </Key>
+          <Property Name="Id_Visit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateToVisit" Type="DateTime" Precision="3" />
+          <Property Name="Id_User" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="BdModel.FK_Visit_User" FromRole="Visit" ToRole="User" />
+        </EntityType>
+        <EntityContainer Name="KrossEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Visit" EntityType="Self.Visit" />
+          <EntitySet Name="CableType" EntityType="BdModel.CableType" />
+          <EntitySet Name="Equipment" EntityType="BdModel.Equipment" />
+          <EntitySet Name="Kross" EntityType="BdModel.Kross" />
+          <EntitySet Name="Linear" EntityType="BdModel.Linear" />
+          <EntitySet Name="Place" EntityType="BdModel.Place" />
+          <EntitySet Name="Role" EntityType="BdModel.Role" />
+          <EntitySet Name="Station" EntityType="BdModel.Station" />
+          <EntitySet Name="sysdiagrams" EntityType="BdModel.sysdiagrams" />
+          <EntitySet Name="User" EntityType="BdModel.User" />
+          <AssociationSet Name="FK_Kross_CableType" Association="BdModel.FK_Kross_CableType">
+            <End Role="CableType" EntitySet="CableType" />
+            <End Role="Kross" EntitySet="Kross" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kross_Equipment" Association="BdModel.FK_Kross_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="Kross" EntitySet="Kross" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kross_Linear" Association="BdModel.FK_Kross_Linear">
+            <End Role="Linear" EntitySet="Linear" />
+            <End Role="Kross" EntitySet="Kross" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kross_Place" Association="BdModel.FK_Kross_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Kross" EntitySet="Kross" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kross_Station" Association="BdModel.FK_Kross_Station">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Kross" EntitySet="Kross" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="BdModel.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visit_User" Association="BdModel.FK_Visit_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BdModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BdModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          </EntityContainer>
         <EntityType Name="CableType">
           <Key>
             <PropertyRef Name="Id_CableType" />
@@ -232,35 +341,35 @@
           <Property Name="Id_CableType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name_C" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_CableType" FromRole="CableType" ToRole="Kross" />
+          <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_CableType" FromRole="CableType" ToRole="Kross" />
         </EntityType>
         <EntityType Name="Equipment">
           <Key>
             <PropertyRef Name="Id_Equipment" />
           </Key>
           <Property Name="Id_Equipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Fee" Type="Int32" Nullable="false" />
           <Property Name="Port" Type="Int32" Nullable="false" />
-          <Property Name="Subscriber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="TypeOfPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Equipment" FromRole="Equipment" ToRole="Kross" />
+          <Property Name="Subscriber" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TypeOfPhone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Equipment" FromRole="Equipment" ToRole="Kross" />
         </EntityType>
         <EntityType Name="Kross">
           <Key>
             <PropertyRef Name="Id_Kross" />
           </Key>
-          <Property Name="Id_Kross" Type="Int32" Nullable="false" />
+          <Property Name="Id_Kross" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Id_Equipment" Type="Int32" />
           <Property Name="Id_Station" Type="Int32" />
           <Property Name="Id_Linear" Type="Int32" />
           <Property Name="Id_CableType" Type="Int32" />
           <Property Name="Id_Place" Type="Int32" />
-          <NavigationProperty Name="CableType" Relationship="Self.FK_Kross_CableType" FromRole="Kross" ToRole="CableType" />
-          <NavigationProperty Name="Equipment" Relationship="Self.FK_Kross_Equipment" FromRole="Kross" ToRole="Equipment" />
-          <NavigationProperty Name="Linear" Relationship="Self.FK_Kross_Linear" FromRole="Kross" ToRole="Linear" />
-          <NavigationProperty Name="Place" Relationship="Self.FK_Kross_Place" FromRole="Kross" ToRole="Place" />
-          <NavigationProperty Name="Station" Relationship="Self.FK_Kross_Station" FromRole="Kross" ToRole="Station" />
+          <NavigationProperty Name="CableType" Relationship="BdModel.FK_Kross_CableType" FromRole="Kross" ToRole="CableType" />
+          <NavigationProperty Name="Equipment" Relationship="BdModel.FK_Kross_Equipment" FromRole="Kross" ToRole="Equipment" />
+          <NavigationProperty Name="Linear" Relationship="BdModel.FK_Kross_Linear" FromRole="Kross" ToRole="Linear" />
+          <NavigationProperty Name="Place" Relationship="BdModel.FK_Kross_Place" FromRole="Kross" ToRole="Place" />
+          <NavigationProperty Name="Station" Relationship="BdModel.FK_Kross_Station" FromRole="Kross" ToRole="Station" />
         </EntityType>
         <EntityType Name="Linear">
           <Key>
@@ -269,7 +378,7 @@
           <Property Name="Id_Linear" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Plint_L" Type="Int32" />
           <Property Name="Pair_L" Type="Int32" />
-          <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Linear" FromRole="Linear" ToRole="Kross" />
+          <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Linear" FromRole="Linear" ToRole="Kross" />
         </EntityType>
         <EntityType Name="Place">
           <Key>
@@ -281,15 +390,15 @@
           <Property Name="Pair" Type="Int32" />
           <Property Name="Mesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Note" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Place" FromRole="Place" ToRole="Kross" />
+          <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Place" FromRole="Place" ToRole="Kross" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Id_Role" />
           </Key>
           <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="BdModel.FK_User_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="Station">
           <Key>
@@ -298,13 +407,13 @@
           <Property Name="Id_Station" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Plint_St" Type="Int32" Nullable="false" />
           <Property Name="Pair_St" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Kross" Relationship="Self.FK_Kross_Station" FromRole="Station" ToRole="Kross" />
+          <NavigationProperty Name="Kross" Relationship="BdModel.FK_Kross_Station" FromRole="Station" ToRole="Kross" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -315,24 +424,15 @@
             <PropertyRef Name="Id_User" />
           </Key>
           <Property Name="Id_User" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id_Role" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
-          <NavigationProperty Name="Visit" Relationship="Self.FK_Visit_User" FromRole="User" ToRole="Visit" />
-        </EntityType>
-        <EntityType Name="Visit">
-          <Key>
-            <PropertyRef Name="Id_Visit" />
-          </Key>
-          <Property Name="Id_Visit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateToVisit" Type="DateTime" Precision="3" />
-          <Property Name="Id_User" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Visit_User" FromRole="Visit" ToRole="User" />
+          <NavigationProperty Name="Role" Relationship="BdModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Visit" Relationship="BdModel.FK_Visit_User" FromRole="User" ToRole="Visit" />
         </EntityType>
         <Association Name="FK_Kross_CableType">
-          <End Role="CableType" Type="Self.CableType" Multiplicity="0..1" />
-          <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+          <End Type="BdModel.CableType" Role="CableType" Multiplicity="0..1" />
+          <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CableType">
               <PropertyRef Name="Id_CableType" />
@@ -343,8 +443,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Kross_Equipment">
-          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
-          <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+          <End Type="BdModel.Equipment" Role="Equipment" Multiplicity="0..1" />
+          <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipment">
               <PropertyRef Name="Id_Equipment" />
@@ -355,8 +455,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Kross_Linear">
-          <End Role="Linear" Type="Self.Linear" Multiplicity="0..1" />
-          <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+          <End Type="BdModel.Linear" Role="Linear" Multiplicity="0..1" />
+          <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Linear">
               <PropertyRef Name="Id_Linear" />
@@ -367,8 +467,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Kross_Place">
-          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
-          <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+          <End Type="BdModel.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Place">
               <PropertyRef Name="Id_Place" />
@@ -379,8 +479,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Kross_Station">
-          <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
-          <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+          <End Type="BdModel.Station" Role="Station" Multiplicity="0..1" />
+          <End Type="BdModel.Kross" Role="Kross" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Station">
               <PropertyRef Name="Id_Station" />
@@ -391,8 +491,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Type="BdModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="BdModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id_Role" />
@@ -403,8 +503,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Visit_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <End Type="BdModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="BdModel.Visit" Role="Visit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id_User" />
@@ -414,146 +514,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KrossEntities2" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CableType" EntityType="Self.CableType" />
-          <EntitySet Name="Equipment" EntityType="Self.Equipment" />
-          <EntitySet Name="Kross" EntityType="Self.Kross" />
-          <EntitySet Name="Linear" EntityType="Self.Linear" />
-          <EntitySet Name="Place" EntityType="Self.Place" />
-          <EntitySet Name="Role" EntityType="Self.Role" />
-          <EntitySet Name="Station" EntityType="Self.Station" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="Visit" EntityType="Self.Visit" />
-          <AssociationSet Name="FK_Kross_CableType" Association="Self.FK_Kross_CableType">
-            <End Role="CableType" EntitySet="CableType" />
-            <End Role="Kross" EntitySet="Kross" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Kross_Equipment" Association="Self.FK_Kross_Equipment">
-            <End Role="Equipment" EntitySet="Equipment" />
-            <End Role="Kross" EntitySet="Kross" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Kross_Linear" Association="Self.FK_Kross_Linear">
-            <End Role="Linear" EntitySet="Linear" />
-            <End Role="Kross" EntitySet="Kross" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Kross_Place" Association="Self.FK_Kross_Place">
-            <End Role="Place" EntitySet="Place" />
-            <End Role="Kross" EntitySet="Kross" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Kross_Station" Association="Self.FK_Kross_Station">
-            <End Role="Station" EntitySet="Station" />
-            <End Role="Kross" EntitySet="Kross" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Visit_User" Association="Self.FK_Visit_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Visit" EntitySet="Visit" />
-          </AssociationSet>
-        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище KrossModelContainer" CdmEntityContainer="KrossEntities2">
-          <EntitySetMapping Name="CableType">
-            <EntityTypeMapping TypeName="KrossModel.CableType">
-              <MappingFragment StoreEntitySet="CableType">
-                <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
-                <ScalarProperty Name="Name_C" ColumnName="Name_C" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Equipment">
-            <EntityTypeMapping TypeName="KrossModel.Equipment">
-              <MappingFragment StoreEntitySet="Equipment">
-                <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Fee" ColumnName="Fee" />
-                <ScalarProperty Name="Port" ColumnName="Port" />
-                <ScalarProperty Name="Subscriber" ColumnName="Subscriber" />
-                <ScalarProperty Name="TypeOfPhone" ColumnName="TypeOfPhone" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Kross">
-            <EntityTypeMapping TypeName="KrossModel.Kross">
-              <MappingFragment StoreEntitySet="Kross">
-                <ScalarProperty Name="Id_Kross" ColumnName="Id_Kross" />
-                <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
-                <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
-                <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
-                <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
-                <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Linear">
-            <EntityTypeMapping TypeName="KrossModel.Linear">
-              <MappingFragment StoreEntitySet="Linear">
-                <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
-                <ScalarProperty Name="Plint_L" ColumnName="Plint_L" />
-                <ScalarProperty Name="Pair_L" ColumnName="Pair_L" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Place">
-            <EntityTypeMapping TypeName="KrossModel.Place">
-              <MappingFragment StoreEntitySet="Place">
-                <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
-                <ScalarProperty Name="Name_P" ColumnName="Name_P" />
-                <ScalarProperty Name="Plint" ColumnName="Plint" />
-                <ScalarProperty Name="Pair" ColumnName="Pair" />
-                <ScalarProperty Name="Mesto" ColumnName="Mesto" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="KrossModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Station">
-            <EntityTypeMapping TypeName="KrossModel.Station">
-              <MappingFragment StoreEntitySet="Station">
-                <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
-                <ScalarProperty Name="Plint_St" ColumnName="Plint_St" />
-                <ScalarProperty Name="Pair_St" ColumnName="Pair_St" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="KrossModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="KrossModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="Хранилище BdModelContainer" CdmEntityContainer="KrossEntities2">
           <EntitySetMapping Name="Visit">
-            <EntityTypeMapping TypeName="KrossModel.Visit">
+            <EntityTypeMapping TypeName="BdModel.Visit">
               <MappingFragment StoreEntitySet="Visit">
                 <ScalarProperty Name="Id_Visit" ColumnName="Id_Visit" />
                 <ScalarProperty Name="DateToVisit" ColumnName="DateToVisit" />
@@ -561,6 +540,122 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CableType">
+            <EntityTypeMapping TypeName="BdModel.CableType">
+              <MappingFragment StoreEntitySet="CableType">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Name_C" ColumnName="Name_C" />
+                <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipment">
+            <EntityTypeMapping TypeName="BdModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="TypeOfPhone" ColumnName="TypeOfPhone" />
+                <ScalarProperty Name="Subscriber" ColumnName="Subscriber" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kross">
+            <EntityTypeMapping TypeName="BdModel.Kross">
+              <MappingFragment StoreEntitySet="Kross">
+                <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
+                <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
+                <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
+                <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
+                <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
+                <ScalarProperty Name="Id_Kross" ColumnName="Id_Kross" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Linear">
+            <EntityTypeMapping TypeName="BdModel.Linear">
+              <MappingFragment StoreEntitySet="Linear">
+                <ScalarProperty Name="Pair_L" ColumnName="Pair_L" />
+                <ScalarProperty Name="Plint_L" ColumnName="Plint_L" />
+                <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Place">
+            <EntityTypeMapping TypeName="BdModel.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Mesto" ColumnName="Mesto" />
+                <ScalarProperty Name="Pair" ColumnName="Pair" />
+                <ScalarProperty Name="Plint" ColumnName="Plint" />
+                <ScalarProperty Name="Name_P" ColumnName="Name_P" />
+                <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="BdModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Station">
+            <EntityTypeMapping TypeName="BdModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="Pair_St" ColumnName="Pair_St" />
+                <ScalarProperty Name="Plint_St" ColumnName="Plint_St" />
+                <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BdModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="BdModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище BdModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище BdModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище BdModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище BdModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BdModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище BdModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BdModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище BdModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище BdModel.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
