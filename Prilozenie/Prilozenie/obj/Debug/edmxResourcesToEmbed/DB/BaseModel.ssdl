@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище KrossModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CableType">
+    <Key>
+      <PropertyRef Name="Id_CableType" />
+    </Key>
+    <Property Name="Id_CableType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name_C" Type="varchar" MaxLength="50" />
+    <Property Name="Quantity" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="Id_Equipment" />
+    </Key>
+    <Property Name="Id_Equipment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fee" Type="int" Nullable="false" />
+    <Property Name="Port" Type="int" Nullable="false" />
+    <Property Name="Subscriber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="TypeOfPhone" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kross">
+    <Key>
+      <PropertyRef Name="Id_Kross" />
+    </Key>
+    <Property Name="Id_Kross" Type="int" Nullable="false" />
+    <Property Name="Id_Equipment" Type="int" />
+    <Property Name="Id_Station" Type="int" />
+    <Property Name="Id_Linear" Type="int" />
+    <Property Name="Id_CableType" Type="int" />
+    <Property Name="Id_Place" Type="int" />
+  </EntityType>
+  <EntityType Name="Linear">
+    <Key>
+      <PropertyRef Name="Id_Linear" />
+    </Key>
+    <Property Name="Id_Linear" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Plint_L" Type="int" />
+    <Property Name="Pair_L" Type="int" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Id_Place" />
+    </Key>
+    <Property Name="Id_Place" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name_P" Type="varchar" MaxLength="100" />
+    <Property Name="Plint" Type="int" />
+    <Property Name="Pair" Type="int" />
+    <Property Name="Mesto" Type="varchar" MaxLength="100" />
+    <Property Name="Note" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id_Role" />
+    </Key>
+    <Property Name="Id_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="Id_Station" />
+    </Key>
+    <Property Name="Id_Station" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Plint_St" Type="int" Nullable="false" />
+    <Property Name="Pair_St" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id_User" />
+    </Key>
+    <Property Name="Id_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id_Role" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visit">
+    <Key>
+      <PropertyRef Name="Id_Visit" />
+    </Key>
+    <Property Name="Id_Visit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateToVisit" Type="datetime" />
+    <Property Name="Id_User" Type="int" />
+  </EntityType>
+  <Association Name="FK_Kross_CableType">
+    <End Role="CableType" Type="Self.CableType" Multiplicity="0..1" />
+    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CableType">
+        <PropertyRef Name="Id_CableType" />
+      </Principal>
+      <Dependent Role="Kross">
+        <PropertyRef Name="Id_CableType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kross_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="Id_Equipment" />
+      </Principal>
+      <Dependent Role="Kross">
+        <PropertyRef Name="Id_Equipment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kross_Linear">
+    <End Role="Linear" Type="Self.Linear" Multiplicity="0..1" />
+    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Linear">
+        <PropertyRef Name="Id_Linear" />
+      </Principal>
+      <Dependent Role="Kross">
+        <PropertyRef Name="Id_Linear" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kross_Place">
+    <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="Id_Place" />
+      </Principal>
+      <Dependent Role="Kross">
+        <PropertyRef Name="Id_Place" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kross_Station">
+    <End Role="Station" Type="Self.Station" Multiplicity="0..1" />
+    <End Role="Kross" Type="Self.Kross" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="Id_Station" />
+      </Principal>
+      <Dependent Role="Kross">
+        <PropertyRef Name="Id_Station" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id_Role" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Id_Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visit_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id_User" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="Id_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище KrossModelContainer">
+    <EntitySet Name="CableType" EntityType="Self.CableType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kross" EntityType="Self.Kross" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Linear" EntityType="Self.Linear" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Kross_CableType" Association="Self.FK_Kross_CableType">
+      <End Role="CableType" EntitySet="CableType" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Equipment" Association="Self.FK_Kross_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Linear" Association="Self.FK_Kross_Linear">
+      <End Role="Linear" EntitySet="Linear" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Place" Association="Self.FK_Kross_Place">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kross_Station" Association="Self.FK_Kross_Station">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="Kross" EntitySet="Kross" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visit_User" Association="Self.FK_Visit_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Visit" EntitySet="Visit" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище KrossModelContainer" CdmEntityContainer="KrossEntities2">
+    <EntitySetMapping Name="CableType">
+      <EntityTypeMapping TypeName="KrossModel.CableType">
+        <MappingFragment StoreEntitySet="CableType">
+          <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
+          <ScalarProperty Name="Name_C" ColumnName="Name_C" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipment">
+      <EntityTypeMapping TypeName="KrossModel.Equipment">
+        <MappingFragment StoreEntitySet="Equipment">
+          <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Fee" ColumnName="Fee" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="Subscriber" ColumnName="Subscriber" />
+          <ScalarProperty Name="TypeOfPhone" ColumnName="TypeOfPhone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kross">
+      <EntityTypeMapping TypeName="KrossModel.Kross">
+        <MappingFragment StoreEntitySet="Kross">
+          <ScalarProperty Name="Id_Kross" ColumnName="Id_Kross" />
+          <ScalarProperty Name="Id_Equipment" ColumnName="Id_Equipment" />
+          <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
+          <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
+          <ScalarProperty Name="Id_CableType" ColumnName="Id_CableType" />
+          <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Linear">
+      <EntityTypeMapping TypeName="KrossModel.Linear">
+        <MappingFragment StoreEntitySet="Linear">
+          <ScalarProperty Name="Id_Linear" ColumnName="Id_Linear" />
+          <ScalarProperty Name="Plint_L" ColumnName="Plint_L" />
+          <ScalarProperty Name="Pair_L" ColumnName="Pair_L" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Place">
+      <EntityTypeMapping TypeName="KrossModel.Place">
+        <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="Id_Place" ColumnName="Id_Place" />
+          <ScalarProperty Name="Name_P" ColumnName="Name_P" />
+          <ScalarProperty Name="Plint" ColumnName="Plint" />
+          <ScalarProperty Name="Pair" ColumnName="Pair" />
+          <ScalarProperty Name="Mesto" ColumnName="Mesto" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Role">
+      <EntityTypeMapping TypeName="KrossModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Station">
+      <EntityTypeMapping TypeName="KrossModel.Station">
+        <MappingFragment StoreEntitySet="Station">
+          <ScalarProperty Name="Id_Station" ColumnName="Id_Station" />
+          <ScalarProperty Name="Plint_St" ColumnName="Plint_St" />
+          <ScalarProperty Name="Pair_St" ColumnName="Pair_St" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="KrossModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="KrossModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Id_Role" ColumnName="Id_Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visit">
+      <EntityTypeMapping TypeName="KrossModel.Visit">
+        <MappingFragment StoreEntitySet="Visit">
+          <ScalarProperty Name="Id_Visit" ColumnName="Id_Visit" />
+          <ScalarProperty Name="DateToVisit" ColumnName="DateToVisit" />
+          <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

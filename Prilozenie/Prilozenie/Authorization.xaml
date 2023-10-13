@@ -1,0 +1,41 @@
+﻿<Window x:Class="Prilozenie.Authorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prilozenie"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="350" Width="300"  
+        MaxHeight="350" MaxWidth="300" 
+        MinHeight="350" MinWidth="300" >
+    <Grid Background="#FF8EC3F1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="/Ss.jpg" HorizontalAlignment="Left"/>
+        <Grid Background="#FF1F78B4" Panel.ZIndex="-1"/>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <TextBlock Text="Кроссовый журнал"  
+                     FontFamily="Segoe UI Symbol" FontSize="18" />
+            <TextBlock Text="Авторизация"  
+                     FontFamily="Segoe UI Symbol" FontSize="18" HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,12,0,0">
+            <TextBlock Text="Введите логин:"/>
+            <TextBox x:Name="tbLogin"/>
+            <TextBlock Text="Введите пароль:" />
+            <Grid>
+                <TextBox x:Name="tbPassword"/>
+                <PasswordBox x:Name="pbPassword"/>
+                <CheckBox x:Name="cbPassword" Click="cbPassword_Click" HorizontalAlignment="Right" Margin="0 10 -18 0"/>
+            </Grid>
+            <Button x:Name="btnGo" Content="Авторизация" Background="#FF1F78B4" Margin="5" Click="btnGo_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

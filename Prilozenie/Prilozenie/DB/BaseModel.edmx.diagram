@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="13c36719be0142e4b858d7f08b34e943" Name="Diagram1">
+        <EntityTypeShape EntityType="KrossModel.CableType" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Equipment" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Kross" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Linear" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Place" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Role" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Station" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.User" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KrossModel.Visit" Width="1.5" PointX="10.25" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="KrossModel.FK_Kross_CableType" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_Kross_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_Kross_Linear" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_Kross_Place" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_Kross_Station" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="KrossModel.FK_Visit_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
